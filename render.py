@@ -722,7 +722,7 @@ def scene_mumbai(cv, x, y, w, h):
     badge(cv, x + 4, y + 4, "COURT FIGHT", bg=NAVY)
 
 # ------------------------------------------------------------------- map
-LAND = bytes((196, 222, 164))
+LAND = bytes((172, 210, 138))
 OCEAN = bytes((208, 232, 244))
 CONTINENTS = [
  # North America
@@ -854,44 +854,44 @@ HEROES = [
 
 SMALL = [
  dict(scene=scene_gaza, label="GAZA \u2014 WAR",
-      head="Israel kills 10 in Gaza; Hamas weighs reply",
-      deck=("Israel kills 10 in Gaza; Hamas weighs its response."),
+      head="Israel kills 10 in Gaza",
+      deck=("Hamas weighs its response as strikes go on."),
       src="Reuters", status="REPORTED"),
  dict(scene=scene_kyiv, label="KYIV \u2014 WAR",
-      head="Russian missiles hit Kyiv, mayor says",
+      head="Russian missiles hit Kyiv",
       deck=("Missiles hit Kyiv; the mayor reports damage. Residents shelter."),
       src="AP", status="REPORTED"),
  dict(scene=scene_riyadh, label="RIYADH \u2014 WAR",
-      head="Saudis intercept two Houthi missiles aimed at Riyadh",
+      head="Saudis intercept Houthi missiles",
       deck=("Air defences down two Houthi missiles. Riyadh reports no damage."),
       src="Reuters", status="CONFIRMED"),
  dict(scene=scene_london, label="LONDON \u2014 MIGRATION",
-      head="UK net migration falls to lowest since 1997",
+      head="UK migration falls to record low",
       deck=("Net migration at its lowest since 1997. Arrivals fall as rules bite."),
       src="ONS", status="OFFICIAL"),
  dict(scene=scene_pyongyang, label="PYONGYANG \u2014 NUCLEAR",
-      head="Kim vows more nuclear weapons, snubs Trump overture",
-      deck=("Kim pledges more nukes and snubs Trump. Pyongyang rejects the US."),
+      head="Kim vows more nuclear weapons",
+      deck=("Kim pledges more nukes, snubs Trump."),
       src="KCNA", status="CLAIM"),
  dict(scene=scene_pretoria, label="PRETORIA \u2014 POLITICS",
-      head="Ramaphosa wins court fight over report",
+      head="Ramaphosa wins court fight",
       deck=("Court backs Ramaphosa on impeachment report. President cleared."),
       src="Reuters", status="CONFIRMED"),
  dict(scene=scene_wellington, label="WELLINGTON \u2014 ELECTION",
-      head="NZ final result: coalition holds 67 of 131 seats",
+      head="NZ coalition holds 67 of 131",
       deck=("Final count: coalition holds 67 of 131 seats. A two-seat majority."),
       src="Electoral Comm.", status="OFFICIAL"),
  dict(scene=scene_newyork, label="NEW YORK \u2014 STORM",
-      head="Thanksgiving storm leaves 500,000 without power",
+      head="Storm leaves 500,000 in dark",
       deck=("Thanksgiving storm cuts power to 500,000. Crews race to restore lines."),
       src="AP", status="REPORTED"),
  dict(scene=scene_delhi, label="NEW DELHI \u2014 COURT",
-      head="Top court: PMLA attachment needs a judicial member",
+      head="Top court: PMLA needs a judge",
       deck=("PMLA attachment needs a judicial member. Top court tightens rules."),
       src="Supreme Court", status="OFFICIAL"),
  dict(scene=scene_mumbai, label="MUMBAI \u2014 BUSINESS",
-      head="Tata Trusts take Chandrasekaran fight to court",
-      deck=("Tata Trusts to fight reappointment in court. Boardroom row goes on."),
+      head="Tata Trusts fight chief pick in court",
+      deck=("Trusts fight Chandrasekaran in court."),
       src="Mint", status="REPORTED"),
 ]
 
@@ -934,7 +934,7 @@ STATS = [
  ("500,000", "homes dark in US storm"),
  ("10", "killed in Gaza strikes"),
  ("67/131", "NZ coalition's majority"),
- ("1997", "UK migration lowest since"),
+ ("77,000", "UK net migration, lowest since 1997"),
  ("11,000", "Rs cr cabinet plan"),
 ]
 
@@ -1009,70 +1009,70 @@ def render():
     fw = text_w("Friday", 5)
     draw_text(cv, MX + fw, 24, " 27 November 2026", 5, INK, bold=True)
     # --- red kicker (hottest first)
-    draw_text(cv, MX, 61, "Bangkok ablaze \u00b7 Drones kill two Italians in Kuwait \u00b7 EU summit wraps up",
+    draw_text(cv, MX, 69, "Bangkok ablaze \u00b7 Drones kill two Italians in Kuwait \u00b7 EU summit wraps up",
               2, RED, bold=True, italic=True)
     # --- fields line
-    draw_text(cv, MX, 77, FIELDS_LINE, 1, INK)
+    draw_text(cv, MX, 85, FIELDS_LINE, 1, INK)
     # --- stat strip: hottest numbers first
     sx = 17
     for num, lab in STATS:
-        cv.frame(sx, 90, 138, 40, LGREY, 1)
-        cv.rect(sx, 90, 138, 3, RED)
+        cv.frame(sx, 96, 138, 42, LGREY, 1)
+        cv.rect(sx, 96, 138, 3, RED)
         hot = num in ("2", "3", "500,000", "10")
-        draw_text(cv, sx + (138 - text_w(num, 3)) // 2, 95, num, 3,
+        draw_text(cv, sx + (138 - text_w(num, 3)) // 2, 98, num, 3,
                   RED if hot else INK, bold=True)
-        para(cv, sx + 4, 118, lab, 1, 130, GREY, leading=8, align='c')
+        para(cv, sx + 4, 121, lab, 1, 130, GREY, leading=8, align='c')
         sx += 142
     # --- region strip
     for i, (key, n) in enumerate(REGIONS):
         x = MX + i * 110
-        cv.rect(x, 137, 10, 10, REG_COL[key])
-        draw_text(cv, x + 14, 138, "%s %d" % (REG_FULL[key], n), 1, INK, bold=True)
+        cv.rect(x, 143, 10, 10, REG_COL[key])
+        draw_text(cv, x + 14, 144, "%s %d" % (REG_FULL[key], n), 1, INK, bold=True)
     # --- UTC timeline (starts with the hottest breaking moment)
     for i, (t, lab) in enumerate(UTC):
         cx = 78 + i * 124
-        draw_text(cv, cx - text_w(t, 2) // 2, 154, t, 2, INK, bold=True)
-        draw_text(cv, cx - text_w(lab, 1) // 2, 176, lab, 1, GREY)
-    cv.hline(MX, 171, CW, GREY, 2)
+        draw_text(cv, cx - text_w(t, 2) // 2, 159, t, 2, INK, bold=True)
+        draw_text(cv, cx - text_w(lab, 1) // 2, 181, lab, 1, GREY)
+    cv.hline(MX, 176, CW, GREY, 2)
     for i in range(8):
-        cv.circle(78 + i * 124, 172, 4, RED)
+        cv.circle(78 + i * 124, 177, 4, RED)
     # --- heroes
     for hi, hs in enumerate(HEROES):
         x = MX + hi * 335
-        hs["scene"](cv, x, 190, 322, 90)
-        draw_text(cv, x, 283, hs["label"], 1, RED, bold=True)
-        para(cv, x, 295, hs["head"], 2, 322, INK, bold=True, leading=15)
-        para(cv, x, 327, hs["deck"], 1, 322, INK, leading=9)
-        why_block(cv, x, 347, 322, hs["why"])
-        draw_text(cv, x, 368, "Source: " + hs["src"], 1, GREY)
-        status_chip(cv, x + 322, 366, hs["status"])
+        hs["scene"](cv, x, 195, 322, 90)
+        draw_text(cv, x, 288, hs["label"], 1, RED, bold=True)
+        para(cv, x, 300, hs["head"], 2, 322, INK, bold=True, leading=15)
+        para(cv, x, 332, hs["deck"], 1, 322, INK, leading=9)
+        why_block(cv, x, 352, 322, hs["why"])
+        draw_text(cv, x, 373, "Source: " + hs["src"], 1, GREY)
+        status_chip(cv, x + 322, 371, hs["status"])
     # --- small scenes, 2 rows x 5
     for si, ss in enumerate(SMALL):
         row, col = si // 5, si % 5
         x = MX + col * 200
-        y0 = 379 + row * 147
+        y0 = 385 + row * 145
         ss["scene"](cv, x, y0, 192, 46)
         cv.rect(x, y0 + 49, 192, 12, BLACK)
         draw_text(cv, x + 4, y0 + 51, ss["label"], 1, WHITE, bold=True)
-        para(cv, x, y0 + 64, ss["head"], 2, 192, INK, bold=True, leading=13)
-        para(cv, x, y0 + 105, ss["deck"], 1, 192, INK, leading=9)
+        para(cv, x, y0 + 64, ss["head"], 2, 192, INK, bold=True, leading=15)
+        para(cv, x, y0 + 100, ss["deck"], 1, 192, INK, leading=9)
         draw_text(cv, x, y0 + 126, "Source: " + ss["src"], 1, GREY)
         status_chip(cv, x + 192, y0 + 124, ss["status"])
     # --- map band
-    draw_text(cv, MX, 673, "WHERE IT HAPPENED \u2014 STORIES 1-13", 2, INK, bold=True)
-    draw_map(cv, MX, 689, CW, 104)
+    draw_text(cv, MX, 677, "WHERE IT HAPPENED \u2014 STORIES 1-13", 2, INK, bold=True)
+    draw_map(cv, MX, 693, CW, 112)
     for i, (key, n) in enumerate(REGIONS):
         x = MX + i * 110
-        cv.rect(x, 798, 10, 10, REG_COL[key])
-        draw_text(cv, x + 14, 799, "%s %d" % (REG_FULL[key], n), 1, INK, bold=True)
+        cv.rect(x, 810, 10, 10, REG_COL[key])
+        draw_text(cv, x + 14, 811, "%s %d" % (REG_FULL[key], n), 1, INK, bold=True)
     # --- ALSO band
-    draw_text(cv, MX, 812, "ALSO ON FRIDAY 27 NOVEMBER \u2014 30 MORE STORIES, NUMBERED AND COLOUR-MATCHED BY REGION",
+    draw_text(cv, MX, 824, "ALSO ON FRIDAY 27 NOVEMBER \u2014 30 MORE STORIES, NUMBERED AND COLOUR-MATCHED BY REGION",
               2, INK, bold=True)
     for ci in range(3):
         x = MX + ci * 330
         for ri in range(10):
             num, city, reg, head, src = ALSO[ci * 10 + ri]
-            y = 829 + ri * 12
+            y = 841 + ri * 11
             draw_text(cv, x, y, str(num) + ".", 1, INK, bold=True)
             chip(cv, x + 24, y - 1, reg, REG_COL[reg], WHITE, 1, 2)
             hx = x + 74
